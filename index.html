@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drift Top 32 Bracket</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Drift Bracket</h1>
+    </header>
+    
+    <main>
+        <div class="container">
+            <div class="admin-panel">
+                <div class="info-box">
+                    <h3>Interactive Bracket</h3>
+                    <p>Click on any driver to select them as the winner of their match.</p>
+                    <div class="button-group">
+                        <button id="reset-bracket" class="btn">Reset Bracket</button>
+                        <button id="download-bracket" class="btn secondary">Download as Image</button>
+                        <button id="share-bracket" class="btn secondary">Share Bracket</button>
+                        <button id="clear-storage" class="btn danger">Clear Saved Data</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="driver-entry-form">
+                <h3>Enter Driver Data</h3>
+                <div class="competition-input">
+                    <label for="competition-name-input">Competition Name:</label>
+                    <input type="text" id="competition-name-input" placeholder="Enter competition name...">
+                </div>
+                <p>Enter one driver per line. Drivers will be placed in the bracket in the exact order they're entered (positions 1, 2, 3, etc.)<br>
+                Use "BYE" as a driver name for empty slots. BYEs will automatically advance their opponent.</p>
+                <form id="driver-entry-form">
+                    <textarea id="driver-list" placeholder="Enter driver data here..."></textarea>
+                    <div class="button-group">
+                        <button type="submit" class="btn">Load Drivers</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="share-url-section" style="display: none;">
+                <h3>Share Your Bracket</h3>
+                <p>Copy this URL to share your bracket with others:</p>
+                <div class="share-url-container">
+                    <input type="text" id="share-url-input" readonly>
+                    <button id="copy-share-url" class="btn secondary">Copy</button>
+                </div>
+            </div>
+            <!-- Mobile round selector moved below the competition name -->
+            <div class="mobile-controls">
+                <label for="round-selector">View Round:</label>
+                <select id="round-selector" class="round-selector">
+                    <option value="all">All Rounds</option>
+                    <option value="round-one">Top 32/16</option>
+                    <option value="round-two">Top 16/Quarter Finals</option>
+                    <option value="round-three">Great 8/Semi Finals</option>
+                    <option value="round-four">Final 4</option>
+                    <option value="championship">Final Battle</option>
+                </select>
+            </div>
+
+            <div id="bracket-container"></div>
+        </div>
+    </main>
+    
+    <!-- Image conversion library for downloading bracket as image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js" integrity="sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- Application scripts -->
+    <script src="js/bracketStorage.js"></script>
+    <script src="js/bracketGenerator.js"></script>
+    <script src="js/bracketDownload.js"></script>
+    <script src="js/bracketSharing.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html> 

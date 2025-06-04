@@ -1,0 +1,835 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #fff;
+    background-color: #1a1a1a;
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+header {
+    background-color: #222;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+main {
+    padding: 2rem 0;
+}
+
+footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+/* Admin Panel Styles */
+.admin-panel {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.info-box {
+    background-color: #333;
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1;
+    min-width: 250px;
+}
+
+.info-box h3 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.info-box p {
+    margin-bottom: 15px;
+    color: #ccc;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #d32f2f;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #b71c1c;
+}
+
+.btn.secondary {
+    background-color: #424242;
+}
+
+.btn.secondary:hover {
+    background-color: #212121;
+}
+
+.btn.danger {
+    background-color: #f44336;
+}
+
+.btn.danger:hover {
+    background-color: #d32f2f;
+}
+
+/* Competition Input */
+.competition-input {
+    margin-bottom: 15px;
+}
+
+.competition-input label {
+    display: block;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+.competition-input input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #222;
+    color: #fff;
+}
+
+/* Driver Entry Form */
+.driver-entry-form {
+    margin-bottom: 20px;
+    background-color: #333;
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.driver-entry-form h3 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.driver-entry-form p {
+    margin-bottom: 15px;
+    color: #ccc;
+}
+
+#driver-list {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #222;
+    color: #fff;
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+#bracket-container {
+    overflow-x: auto;
+    padding: 1rem 0;
+    position: relative;
+    min-height: 700px;
+    color: #fff;
+}
+
+section {
+    padding: 20px;
+    background-color: #1a1a1a;
+}
+
+.is-colored {
+    border: none;
+    height: 2px;
+    background-color: #d32f2f;
+    margin: 10px 0 20px;
+}
+
+/* Bracket layout */
+.bracket-container {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 1200px;
+}
+
+/* Round headers */
+.round-headers {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+.round-header {
+    flex: 1;
+    color: #4790c5;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+/* Round detail headers */
+.round-details {
+    color: #4790c5;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* Add horizontal header row to match the screenshot */
+section::before {
+    content: '';
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Main bracket structure */
+.split {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.split-one, .split-two {
+    flex: 2;
+    display: flex;
+}
+
+.champion {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+    position: relative;
+}
+
+.round {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 10px;
+    position: relative;
+}
+
+.round-one {
+    justify-content: space-between;
+}
+
+.round-two, .round-three, .round-four {
+    justify-content: space-around;
+}
+
+/* Matchup styling */
+.matchup {
+    list-style: none;
+    margin-bottom: 30px;
+    position: relative;
+    width: 100%;
+}
+
+/* Driver boxes styling */
+.top, .bottom {
+    width: 180px;
+    height: 30px;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 1px;
+    position: relative;
+    transition: background-color 0.2s;
+    overflow: hidden;
+}
+
+/* Adjust the driver name in the left bracket */
+.split-one .top, 
+.split-one .bottom {
+    justify-content: flex-start;
+    text-align: left;
+    padding-left: 5px;
+}
+
+/* Adjust the driver name in the right bracket */
+.split-two .top, 
+.split-two .bottom {
+    justify-content: flex-end;
+    text-align: right;
+    padding-right: 5px;
+}
+
+/* Seed number styling */
+.qualif_num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: #990000;
+    color: white;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* For left side of bracket (split-one) */
+.split-one .qualif_num {
+    float: left;
+    margin-right: 10px;
+}
+
+/* For right side of bracket (split-two) */
+.split-two .qualif_num {
+    order: 2; /* Push to the right */
+    margin-left: 5px;
+    margin-right: 0;
+}
+
+/* Final battle */
+.final {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 25px;
+}
+
+.championship {
+    width: 100%;
+    background-color: #990000;
+    padding: 15px 10px;
+    text-align: center;
+}
+
+.championship .top, 
+.championship .bottom {
+    background-color: transparent;
+    justify-content: center;
+    padding: 5px 0;
+    font-weight: bold;
+}
+
+.vs-champion {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    padding: 10px 0;
+}
+
+/* Selected driver styles */
+.top.selected, .bottom.selected {
+    background-color: #d32f2f !important;
+    color: white !important;
+}
+
+/* To make driver items clickable */
+.top:hover, .bottom:hover {
+    background-color: rgba(211, 47, 47, 0.7);
+}
+
+/* Connector lines for the bracket */
+/* For left bracket connectors */
+.split-one .matchup::after {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: 15px;
+    width: 20px;
+    height: 1px;
+    background-color: #444;
+}
+
+.split-one .matchup:nth-child(odd)::before {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: 15px;
+    height: calc(100% + 30px);
+    width: 1px;
+    background-color: #444;
+}
+
+/* For right bracket connectors */
+.split-two .matchup::after {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 15px;
+    width: 20px;
+    height: 1px;
+    background-color: #444;
+}
+
+.split-two .matchup:nth-child(odd)::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 15px;
+    height: calc(100% + 30px);
+    width: 1px;
+    background-color: #444;
+}
+
+/* Final 4 to championship connectors */
+.round-four .matchup::after {
+    width: 25px;
+}
+
+/* Status messages */
+.status-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+.status-message.info {
+    background-color: #2196F3;
+}
+
+.status-message.success {
+    background-color: #4CAF50;
+}
+
+.status-message.error {
+    background-color: #F44336;
+}
+
+.status-message.processing {
+    background-color: #FF9800;
+}
+
+.status-message.fade-out {
+    opacity: 0;
+}
+
+/* Mobile Round Display Classes */
+.mobile-view .round,
+.mobile-view .champion {
+    display: none;
+}
+
+.mobile-view.show-round-one .round-one,
+.mobile-view.show-round-two .round-two,
+.mobile-view.show-round-three .round-three,
+.mobile-view.show-round-four .round-four,
+.mobile-view.show-championship .champion {
+    display: flex;
+}
+
+/* Ensure the competition name and mobile controls work well together */
+#competition-name {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+    display: block; /* Ensure it's visible */
+}
+
+/* Mobile Round Selector */
+.mobile-controls {
+    margin: 15px auto;
+    padding: 10px 15px;
+    max-width: 300px;
+    background-color: #333;
+    border-radius: 4px;
+    display: none; /* Hidden by default, shown on mobile */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100; /* Ensure it's above other elements */
+}
+
+.mobile-controls label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.round-selector {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #222;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    #bracket-container {
+        padding: 0 0 10px 0;
+        margin-bottom: 0;
+    }
+    
+    .mobile-controls {
+        display: block; /* Show on mobile */
+    }
+    
+    .bracket-container {
+        min-width: 100%;
+    }
+    
+    /* Enhanced mobile driver boxes - BIGGER */
+    .top, .bottom {
+        width: 100%; /* Full width for mobile */
+        max-width: 300px; /* Increased from 250px */
+        font-size: 16px; /* Increased from 14px */
+        padding-left: 5px; /* Added some padding */
+        padding-right: 5px;
+        height: 36px; /* Increased from 26px */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 2px 0; /* Add margin between drivers */
+    }
+    
+    /* Make qualification numbers larger */
+    .qualif_num {
+        width: 36px; /* Increased from 26px */
+        height: 36px; /* Increased from 26px */
+        font-size: 14px; /* Increased from 12px */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 36px;
+    }
+    
+    /* Adjust matchup spacing */
+    .matchup {
+        margin-bottom: 25px; /* Increased from 15px */
+        width: 100%;
+    }
+    
+    /* More compact structure */
+    .round {
+        padding: 0 8px; /* Increased from 5px */
+    }
+    
+    /* Special adjustments for mobile view */
+    .mobile-view .bracket-container {
+        justify-content: center;
+    }
+    
+    .mobile-view .split {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    /* Ensure round titles are visible */
+    .round-details {
+        font-size: 14px; /* Increased from 12px */
+        margin-bottom: 15px; /* Increased from 10px */
+        font-weight: bold;
+    }
+    
+    /* Right side bracket on mobile */
+    .split-two .top, 
+    .split-two .bottom {
+        padding-right: 5px;
+    }
+    
+    /* Fix qualification number positioning on right side */
+    .split-two .qualif_num {
+        order: 2;
+    }
+    
+    /* Championship styling */
+    .championship {
+        width: 100%;
+        max-width: 300px; /* Increased from 250px */
+        margin: 0 auto;
+    }
+    
+    .championship .top,
+    .championship .bottom {
+        max-width: 100%;
+        justify-content: center;
+        text-align: center;
+        margin: 8px 0; /* Increased from 5px */
+    }
+    
+    .vs-champion {
+        font-size: 14px; /* Increased from 12px */
+        padding: 8px 0; /* Increased from 5px */
+    }
+    
+    /* Final battle needs more space */
+    .mobile-view.show-championship .champion {
+        padding: 30px 10px; /* Increased from 20px */
+    }
+    
+    /* Better centering for mobile view */
+    .mobile-view .round {
+        align-items: center;
+        width: 100%;
+    }
+    
+    /* Make sure selected drivers are clearly visible */
+    .top.selected, .bottom.selected {
+        background-color: #d32f2f !important;
+        color: white !important;
+        font-weight: bold;
+    }
+    
+    /* Improve form controls for mobile */
+    #driver-list {
+        height: 120px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .button-group .btn {
+        margin-bottom: 8px;
+        width: 100%;
+        max-width: 250px;
+    }
+    
+    /* Make status messages more visible on mobile */
+    .status-message {
+        width: 90%;
+        max-width: 400px;
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        text-align: center;
+    }
+    
+    /* Improve driver entry form */
+    .driver-entry-form,
+    .info-box,
+    .share-url-section {
+        padding: 10px;
+    }
+    
+    /* Fix bracket alignment */
+    .bracket-container {
+        align-items: center;
+    }
+    
+    /* Show the mobile controls by default on mobile */
+    .mobile-controls {
+        position: sticky;
+        bottom: 0;
+        z-index: 100;
+    }
+    
+    /* Improve the mobile bracket view */
+    .mobile-view .round-details {
+        color: #d32f2f;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    .top, .bottom {
+        max-width: 280px; /* Increased from 200px */
+        font-size: 14px; /* Increased from 12px */
+        height: 32px; /* Increased from 24px */
+    }
+    
+    .qualif_num {
+        width: 32px; /* Increased from 24px */
+        height: 32px; /* Increased from 24px */
+        font-size: 13px; /* Increased from 11px */
+        min-width: 32px;
+    }
+    
+    /* More spacing */
+    .matchup {
+        margin-bottom: 20px; /* Increased from 10px */
+    }
+    
+    /* Ensure the bracket fits better on small screens */
+    .mobile-view .round {
+        width: 100%;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 360px) {
+    .top, .bottom {
+        max-width: 240px; /* Increased from 180px */
+        font-size: 13px; /* Increased from 11px */
+        height: 30px;
+    }
+    
+    .qualif_num {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+        min-width: 30px;
+    }
+    
+    .championship {
+        max-width: 240px; /* Increased from 200px */
+    }
+}
+
+/* Share URL section */
+.share-url-section {
+    margin-bottom: 20px;
+    background-color: #333;
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.share-url-section h3 {
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.share-url-section p {
+    margin-bottom: 15px;
+    color: #ccc;
+}
+
+.share-url-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#share-url-input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #222;
+    color: #fff;
+    cursor: text;
+}
+
+#copy-share-url {
+    white-space: nowrap;
+}
+
+/* Mobile Round Selector - Additional styles */
+.mobile-controls select:focus {
+    outline: none;
+    border-color: #d32f2f;
+}
+
+/* Ensure matchups in the bracket get proper width */
+.matchup {
+    width: 100%;
+}
+
+/* Add some spacing around the bracket container on mobile */
+@media (max-width: 768px) {
+    #bracket-container {
+        padding: 0 0 10px 0;
+        margin-bottom: 0;
+    }
+    
+    /* Show the mobile controls by default on mobile */
+    .mobile-controls {
+        display: block; /* Show on mobile */
+    }
+    
+    /* Sticky position for the mobile controls */
+    .mobile-controls {
+        position: sticky;
+        bottom: 0;
+        z-index: 100;
+    }
+    
+    /* Improve the mobile bracket view */
+    .mobile-view .round-details {
+        color: #d32f2f;
+    }
+}
+
+/* Ensure the competition name and mobile controls work well together */
+#competition-name {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #fff;
+    display: block; /* Ensure it's visible */
+}
+
+/* Download view - special styling for when downloading the bracket */
+.download-view {
+    min-width: 1200px !important;
+    width: 100% !important;
+    max-width: none !important;
+    overflow: visible !important;
+}
+
+.download-view .round,
+.download-view .champion {
+    display: flex !important;
+}
+
+.download-view .bracket-container {
+    min-width: 1200px !important;
+}
+
+.download-view #competition-name {
+    font-size: 2.2rem !important;
+    margin-bottom: 20px !important;
+} 
