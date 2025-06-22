@@ -61,8 +61,14 @@ function updateRoundSelectorOptions(isTop16) {
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
+    // Check if LZString is available
+    const lzStringAvailable = typeof LZString !== 'undefined' || typeof window.LZString !== 'undefined';
+    
     // Initialize the bracket generator
     await bracketGenerator.init();
+    
+    // Initialize bracket sharing
+    bracketSharing.init();
     
     // Check if we're on a mobile device
     const isMobile = window.innerWidth <= 768;

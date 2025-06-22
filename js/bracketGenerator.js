@@ -429,8 +429,6 @@ const bracketGenerator = {
                     
                     // Add title attribute for tooltip
                     targetElement.setAttribute('title', cleanNewWinnerName);
-                    
-                    console.log(`Advanced ${cleanNewWinnerName} to ${isRightSide ? 'right' : 'left'} side, round ${nextRoundNumber}, match ${nextMatchNumber}, position ${targetPosition}`);
                 }
             } else {
                 console.warn(`Could not find target matchup: side=${isRightSide ? 'right' : 'left'}, round=${nextRoundNumber}, localIndex=${localNextMatchIndex}, matchups.length=${matchups.length}`);
@@ -665,9 +663,6 @@ const bracketGenerator = {
             return;
         }
         
-        console.log('Restoring winners for bracket size:', this.bracketData.bracketSize);
-        console.log('Saved winners:', JSON.stringify(this.bracketData.winners));
-        
         // First pass: advance winners to populate the bracket
         // Store the matches we need to mark as selected later
         const matchesToMark = {};
@@ -732,7 +727,6 @@ const bracketGenerator = {
                 if (cleanDriverText === cleanWinnerName || driverText === winner) {
                     // Mark this driver as selected
                     driver.classList.add('selected');
-                    console.log(`Marked ${cleanWinnerName} as winner for match ${matchId}`);
                 }
             });
         });
@@ -757,7 +751,6 @@ const bracketGenerator = {
                     if (targetElement) {
                         targetElement.textContent = cleanWinnerName;
                         this.makeElementSelectable(targetElement);
-                        console.log(`Set ${cleanWinnerName} in championship ${position}`);
                     }
                 }
             });
@@ -773,7 +766,6 @@ const bracketGenerator = {
                     const finalistName = this.cleanDriverName(finalist.textContent.trim());
                     if (finalistName === cleanChampionName) {
                         finalist.classList.add('selected');
-                        console.log(`Marked ${cleanChampionName} as champion`);
                     }
                 });
             }

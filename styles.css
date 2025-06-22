@@ -1,4 +1,39 @@
 /* Reset and Base Styles */
+:root {
+    /* Background Colors */
+    --bg-primary: #111;
+    --bg-secondary: #222;
+    --bg-tertiary: #333;
+    --bg-dark: #000;
+    
+    /* Text Colors */
+    --text-primary: #fafafa;
+    --text-secondary: #cfcfcf;
+    --text-tertiary: #e0e0e0;
+
+    /* Border Colors */
+    --border-primary: #444;
+    --border-secondary: #333;
+    
+    /* Accent Colors */
+    --accent-primary: #bc2b21;
+    --accent-primary-hover: color-mix(in srgb, var(--accent-primary) 85%, var(--bg-dark));
+    --accent-secondary: #444;
+    --accent-secondary-hover: #222;
+    --accent-qualification: #990000;
+    --accent-primary-transparent: color-mix(in srgb, var(--accent-primary) 70%, transparent);
+    
+    /* Status Message Colors */
+    --status-info: #2196F3;
+    --status-success: #4CAF50;
+    --status-error: #F44336;
+    --status-processing: #FF9800;
+    
+    /* Shadow Colors */
+    --shadow-light: color-mix(in srgb, var(--bg-dark) 10%, transparent);
+    --shadow-medium: color-mix(in srgb, var(--bg-dark) 30%, transparent);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,8 +43,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #fff;
-    background-color: #1a1a1a;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
 }
 
 .container {
@@ -20,11 +55,11 @@ body {
 }
 
 header {
-    background-color: #222;
-    color: #fff;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     padding: 1rem 0;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px var(--shadow-light);
 }
 
 header h1 {
@@ -37,8 +72,8 @@ main {
 }
 
 footer {
-    background-color: #222;
-    color: #fff;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     text-align: center;
     padding: 1rem 0;
     margin-top: 2rem;
@@ -54,10 +89,10 @@ footer {
 }
 
 .info-box {
-    background-color: #333;
+    background-color: var(--bg-tertiary);
     border-radius: 4px;
     padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px var(--shadow-light);
     text-align: center;
     flex: 1;
     min-width: 250px;
@@ -65,12 +100,12 @@ footer {
 
 .info-box h3 {
     margin-bottom: 10px;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .info-box p {
     margin-bottom: 15px;
-    color: #ccc;
+    color: var(--text-tertiary);
 }
 
 .button-group {
@@ -82,8 +117,8 @@ footer {
 
 .btn {
     display: inline-block;
-    background-color: #d32f2f;
-    color: white;
+    background-color: var(--accent-primary);
+    color: var(--text-secondary);
     border: none;
     padding: 8px 16px;
     border-radius: 4px;
@@ -93,23 +128,17 @@ footer {
 }
 
 .btn:hover {
-    background-color: #b71c1c;
+    background-color: var(--accent-primary-hover);
 }
 
 .btn.secondary {
-    background-color: #424242;
+    background-color: var(--accent-secondary);
+    color: var(--text-primary);
 }
 
 .btn.secondary:hover {
-    background-color: #212121;
-}
-
-.btn.danger {
-    background-color: #f44336;
-}
-
-.btn.danger:hover {
-    background-color: #d32f2f;
+    background-color: var(--accent-secondary-hover);
+    color: var(--text-primary);
 }
 
 /* Competition Input */
@@ -120,35 +149,35 @@ footer {
 .competition-input label {
     display: block;
     margin-bottom: 5px;
-    color: #fff;
+    color: var(--text-tertiary);
 }
 
 .competition-input input {
     width: 100%;
     padding: 8px 10px;
-    border: 1px solid #444;
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
-    background-color: #222;
-    color: #fff;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 /* Driver Entry Form */
 .driver-entry-form {
     margin-bottom: 20px;
-    background-color: #333;
+    background-color: var(--bg-tertiary);
     border-radius: 4px;
     padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px var(--shadow-light);
 }
 
 .driver-entry-form h3 {
     margin-bottom: 10px;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .driver-entry-form p {
     margin-bottom: 15px;
-    color: #ccc;
+    color: var(--text-tertiary);
 }
 
 /* Textarea with line numbers - IDE style */
@@ -157,19 +186,19 @@ footer {
     display: flex;
     width: 100%;
     margin-bottom: 10px;
-    background-color: #222;
+    background-color: var(--bg-secondary);
     border-radius: 4px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    border: 1px solid #333;
+    box-shadow: 0 2px 8px var(--shadow-medium);
+    border: 1px solid var(--border-secondary);
 }
 
 .line-numbers {
     min-width: 40px;
     padding: 10px 0;
-    background-color: #1a1a1a;
-    border-right: 1px solid #333;
-    color: #666;
+    background-color: var(--bg-primary);
+    border-right: 1px solid var(--border-secondary);
+    color: var(--text-tertiary);
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     user-select: none;
     text-align: right;
@@ -183,15 +212,15 @@ footer {
     height: 21px;
     line-height: 21px;
     font-size: 12px;
-    color: #777;
+    color: var(--text-tertiary);
 }
 
 #driver-list {
     flex: 1;
     padding: 10px 15px;
     border: none;
-    background-color: #222;
-    color: #e6e6e6;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     resize: vertical;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
     font-size: 14px;
@@ -211,31 +240,6 @@ footer {
 
 #driver-list {
     overflow-y: auto;
-}
-
-/* Customize scrollbar */
-#driver-list::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-#driver-list::-webkit-scrollbar-track {
-    background: #2a2a2a;
-}
-
-#driver-list::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 4px;
-}
-
-#driver-list::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-/* Hide scrollbar in Firefox */
-#driver-list {
-    scrollbar-width: thin;
-    scrollbar-color: #444 #222;
 }
 
 /* Ensure textarea and line numbers have the same line height and padding top */
@@ -260,18 +264,18 @@ footer {
     padding: 1rem 0;
     position: relative;
     min-height: 700px;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 section {
     padding: 20px;
-    background-color: #1a1a1a;
+    background-color: var(--bg-primary);
 }
 
 .is-colored {
     border: none;
     height: 2px;
-    background-color: #d32f2f;
+    background-color: var(--accent-primary);
     margin: 10px 0 20px;
 }
 
@@ -283,27 +287,9 @@ section {
     min-width: 1200px;
 }
 
-/* Round headers */
-.round-headers {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    text-align: center;
-    width: 100%;
-    padding: 0 20px;
-}
-
-.round-header {
-    flex: 1;
-    color: #4790c5;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 14px;
-}
-
 /* Round detail headers */
 .round-details {
-    color: #fafafa;
+    color: var(--text-primary);
     font-weight: bold;
     text-align: center;
     font-size: 14px;
@@ -378,8 +364,8 @@ section::before {
     width: 310px;
     overflow: hidden;
     height: 30px;
-    background-color: #000;
-    color: #fff;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     margin-bottom: 1px;
@@ -410,8 +396,8 @@ section::before {
     justify-content: center;
     width: 30px;
     height: 30px;
-    background-color: #990000;
-    color: white;
+    background-color: var(--accent-qualification);
+    color: var(--text-primary);
     font-weight: bold;
     flex-shrink: 0;
 }
@@ -435,9 +421,10 @@ section::before {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 25px;
-    background-color: #333;
-    border-radius: 5%;
+    padding: 5px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 4px;
 }
 
 .championship {
@@ -448,7 +435,7 @@ section::before {
 
 .championship .top, 
 .championship .bottom {
-    background-color: transparent;
+    background-color: var(--bg-dark);
     justify-content: center;
     text-align: center;
     padding: 5px 0;
@@ -462,19 +449,13 @@ section::before {
 
 .vs-champion {
     font-size: 14px;
-    color: rgba(255,255,255,0.8);
+    color: var(--text-primary);
     padding: 10px 0;
-}
-
-/* Selected driver styles */
-.top.selected, .bottom.selected {
-    background-color: #d32f2f !important;
-    color: white !important;
 }
 
 /* To make driver items clickable */
 .top:hover, .bottom:hover {
-    background-color: rgba(211, 47, 47, 0.7);
+    background-color: var(--accent-primary-transparent);
 }
 
 /* Status messages */
@@ -484,26 +465,26 @@ section::before {
     right: 20px;
     padding: 10px 15px;
     border-radius: 4px;
-    color: white;
+    color: var(--text-primary);
     font-weight: bold;
     z-index: 1000;
     transition: opacity 0.5s ease;
 }
 
 .status-message.info {
-    background-color: #2196F3;
+    background-color: var(--status-info);
 }
 
 .status-message.success {
-    background-color: #4CAF50;
+    background-color: var(--status-success);
 }
 
 .status-message.error {
-    background-color: #F44336;
+    background-color: var(--status-error);
 }
 
 .status-message.processing {
-    background-color: #FF9800;
+    background-color: var(--status-processing);
 }
 
 .status-message.fade-out {
@@ -534,14 +515,14 @@ section::before {
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #fff;
+    color: var(--text-primary);
     display: block; /* Ensure it's visible */
 }
 
 /* Mobile Round Selector */
 .mobile-controls {
     padding: 10px 15px;
-    background-color: #333;
+    background-color: var(--bg-tertiary);
     display: none; /* Hidden by default, shown on mobile */
     text-align: center;
     z-index: 100; /* Ensure it's above other elements */
@@ -550,7 +531,7 @@ section::before {
 .mobile-controls label {
     display: block;
     margin-bottom: 8px;
-    color: #fff;
+    color: var(--text-primary);
     font-weight: bold;
     font-size: 16px;
 }
@@ -558,10 +539,10 @@ section::before {
 .round-selector {
     width: 100%;
     padding: 10px;
-    border: 1px solid #444;
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
-    background-color: #222;
-    color: #fff;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     font-size: 16px;
     cursor: pointer;
 }
@@ -689,8 +670,8 @@ section::before {
     
     /* Make sure selected drivers are clearly visible */
     .top.selected, .bottom.selected {
-        background-color: #d32f2f !important;
-        color: white !important;
+        background-color: var(--accent-primary) !important;
+        color: var(--text-secondary) !important;
         font-weight: bold;
     }
     
@@ -734,10 +715,6 @@ section::before {
         z-index: 100;
     }
     
-    /* Improve the mobile bracket view */
-    .mobile-view .round-details {
-        color: #d32f2f;
-    }
 }
 
 /* Small phones */
@@ -787,20 +764,20 @@ section::before {
 /* Share URL section */
 .share-url-section {
     margin-bottom: 20px;
-    background-color: #333;
+    background-color: var(--bg-tertiary);
     border-radius: 4px;
     padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px var(--shadow-light);
 }
 
 .share-url-section h3 {
     margin-bottom: 10px;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .share-url-section p {
     margin-bottom: 15px;
-    color: #ccc;
+    color: var(--text-tertiary);
 }
 
 .share-url-container {
@@ -812,10 +789,10 @@ section::before {
 #share-url-input {
     flex: 1;
     padding: 8px 10px;
-    border: 1px solid #444;
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
-    background-color: #222;
-    color: #fff;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
     cursor: text;
 }
 
@@ -826,7 +803,7 @@ section::before {
 /* Mobile Round Selector - Additional styles */
 .mobile-controls select:focus {
     outline: none;
-    border-color: #d32f2f;
+    border-color: var(--accent-primary);
 }
 
 /* Ensure matchups in the bracket get proper width */
@@ -840,11 +817,6 @@ section::before {
         padding: 0 0 10px 0;
         margin-bottom: 0;
     }
-    
-    /* Improve the mobile bracket view */
-    .mobile-view .round-details {
-        color: #d32f2f;
-    }
 }
 
 /* Ensure the competition name and mobile controls work well together */
@@ -853,7 +825,7 @@ section::before {
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #fff;
+    color: var(--text-primary);
     display: block; /* Ensure it's visible */
 }
 

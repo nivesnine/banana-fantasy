@@ -5,7 +5,7 @@ An interactive bracket generator for Drift tournaments, allowing users to create
 ## Features
 
 - Create Top 32 or Top 16 brackets (automatically determined based on number of drivers)
-- Enter custom driver lists with seed numbers
+- Enter custom driver lists
 - Customize competition name
 - Interactive bracket - select winners by clicking on drivers
 - Download the bracket as an image
@@ -15,32 +15,38 @@ An interactive bracket generator for Drift tournaments, allowing users to create
 
 ## How to Use
 
-1. Enter a competition name (optional)
-2. Enter your driver list in the format "Driver Name, Seed Number" (one per line)
+1. Enter a competition name (optional) in the designated field
+2. Enter your driver list (one per line) in the text area
 3. Click "Load Drivers" to generate the bracket
-4. Click on drivers to advance them through the bracket
-5. Use the "Download as Image" button to save your bracket
-6. Use the "Share Bracket" button to generate a shareable URL
-7. Use "Reset Bracket" to clear winner selections but keep driver data
-8. Use "Clear Saved Data" to completely reset the bracket
+4. The bracket will automatically determine whether to use Top 16 or Top 32 format based on your driver count
+5. Click on driver names to advance them through the bracket
+6. Use the "Download as Image" button to save a copy of your current bracket
+7. Use the "Share Bracket" button to generate a shareable URL that contains your bracket data
+8. Use "Reset Bracket" to clear winner selections while keeping your driver data
+9. Use "Clear Saved Data" to completely reset the application
 
 ### Driver Entry Format
 
-Enter one driver per line in the text area using this format:
+Enter one driver per line in the text area:
 ```
-Driver Name, Seed Number
+Driver Name
 ```
 
 For example:
 ```
-James Deane, 1
-Fredric Aasbo, 2
-Chris Forsberg, 3
+James Deane
+Fredric Aasbo
+Chris Forsberg
+Daigo Saito
 ```
 
-If you don't specify a seed number, drivers will be seeded in the order they are entered.
-
-You can use "BYE" as a driver name for empty slots. BYEs will automatically advance their opponent.
+Tips for driver entry:
+- Drivers will be seeded in the order they are entered
+- You can use "BYE" as a driver name for empty slots (BYEs will automatically advance their opponent)
+- For the best seeding, enter higher-ranked drivers at the top of your list
+- You need at least 4 drivers to generate a bracket
+- The application supports a maximum of 32 drivers
+- Drivers will be paired based on standard tournament seeding (1 vs 32, 2 vs 31, etc.)
 
 ### Sharing Your Bracket
 

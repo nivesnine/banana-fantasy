@@ -3,6 +3,25 @@
  */
 const bracketSharing = {
     /**
+     * Reference to the LZString library if available
+     */
+    lzString: null,
+
+    /**
+     * Initialize the module
+     */
+    init: function() {
+        // Try to get a reference to LZString library
+        if (typeof LZString !== 'undefined') {
+            this.lzString = LZString;
+        } else if (typeof window.LZString !== 'undefined') {
+            this.lzString = window.LZString;
+        } else {
+            console.error('LZString library not found! Share links will use base64 encoding instead.');
+        }
+    },
+
+    /**
      * Creates a shareable URL for the current bracket
      * @returns {string} - Shareable URL
      */
@@ -18,9 +37,19 @@ const bracketSharing = {
                 driverListText: bracketGenerator.bracketData.driverListText
             };
             
-            // Convert to JSON and encode for URL safety
+            // Convert to JSON 
             const jsonData = JSON.stringify(bracketData);
-            const encodedData = encodeURIComponent(btoa(jsonData));
+            let encodedData;
+            
+            // Use LZ-string for compression if available
+            if (this.lzString && this.lzString.compressToEncodedURIComponent) {
+                // Use LZ-string's URL-safe compression
+                encodedData = this.lzString.compressToEncodedURIComponent(jsonData);
+            } else {
+                // Fall back to base64 encoding
+                encodedData = encodeURIComponent(btoa(jsonData));
+                console.warn('LZString compressToEncodedURIComponent not available, using base64 encoding');
+            }
             
             // Create the URL with data as a parameter
             const shareURL = `${window.location.origin}${window.location.pathname}?share=${encodedData}`;
@@ -69,9 +98,37 @@ const bracketSharing = {
                 return false;
             }
             
-            // Decode the data
-            const jsonData = atob(decodeURIComponent(shareData));
-            const bracketData = JSON.parse(jsonData);
+            let jsonData;
+            let bracketData;
+            
+            // Try to decompress the data
+            if (this.lzString && this.lzString.decompressFromEncodedURIComponent) {
+                try {
+                    // Try to decompress with LZ-string's URL-safe method first
+                    jsonData = this.lzString.decompressFromEncodedURIComponent(shareData);
+                    bracketData = JSON.parse(jsonData);
+                } catch (e) {
+                    // Fall back to old format (base64)
+                    try {
+                        jsonData = atob(decodeURIComponent(shareData));
+                        bracketData = JSON.parse(jsonData);
+                    } catch (e2) {
+                        console.error('Failed to parse shared data:', e2);
+                        bracketStorage.showStatusMessage('Invalid shared bracket data', 'error');
+                        return false;
+                    }
+                }
+            } else {
+                // LZString not available, try base64 only
+                try {
+                    jsonData = atob(decodeURIComponent(shareData));
+                    bracketData = JSON.parse(jsonData);
+                } catch (e) {
+                    console.error('Failed to parse shared data:', e);
+                    bracketStorage.showStatusMessage('Invalid shared bracket data', 'error');
+                    return false;
+                }
+            }
             
             // Validate the data structure
             if (!this.validateBracketData(bracketData)) {
