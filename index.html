@@ -21,6 +21,7 @@
                         <button id="reset-bracket" class="btn">Reset Bracket</button>
                         <button id="download-bracket" class="btn">Download as Image</button>
                         <button id="share-bracket" class="btn">Share Bracket</button>
+                        <button id="customize-colors" class="btn">Customize Colors</button>
                         <button id="clear-storage" class="btn">Clear Saved Data</button>
                     </div>
                 </div>
@@ -68,6 +69,41 @@
                 <button id="download-bracket-mobile" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></button>
             </div>
         </div>
+
+        <!-- Color Picker Modal -->
+        <div id="color-picker-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Customize Colors</h3>
+                    <button id="close-color-picker" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="color-picker-group">
+                        <label for="accent-color-picker">Accent Color (highlights, borders):</label>
+                        <div class="color-input-container">
+                            <input type="color" id="accent-color-picker" value="#bc2b21">
+                            <input type="text" id="accent-color-text" value="#bc2b21" maxlength="7">
+                        </div>
+                    </div>
+                    <div class="color-picker-group">
+                        <label for="text-color-picker">Secondary Text Color:</label>
+                        <div class="color-input-container">
+                            <input type="color" id="text-color-picker" value="#cfcfcf">
+                            <input type="text" id="text-color-text" value="#cfcfcf" maxlength="7">
+                        </div>
+                    </div>
+                    <div class="color-preview">
+                        <div class="preview-item">
+                            <div class="preview-box accent-preview">Accent Color Preview</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="reset-colors" class="btn secondary">Reset to Default</button>
+                    <button id="apply-colors" class="btn">Apply Colors</button>
+                </div>
+            </div>
+        </div>
     </main>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.13/html-to-image.min.js" integrity="sha512-iZ2ORl595Wx6miw+GuadDet4WQbdSWS3JLMoNfY8cRGoEFy6oT3G9IbcrBeL6AfkgpA51ETt/faX6yLV+/gFJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -78,6 +114,7 @@
     <script src="js/bracketGenerator.js"></script>
     <script src="js/bracketDownload.js"></script>
     <script src="js/bracketSharing.js"></script>
+    <script src="js/colorCustomizer.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html> 
