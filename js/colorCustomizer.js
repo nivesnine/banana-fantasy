@@ -41,7 +41,6 @@ class ColorCustomizer {
         this.updatePreview();
         
         this.isInitialized = true;
-        console.log('Color customizer initialized');
     }
     
     /**
