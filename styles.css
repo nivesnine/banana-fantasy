@@ -453,6 +453,11 @@ section::before {
     padding: 10px 0;
 }
 
+.top.selected, .bottom.selected {
+    background-color: var(--accent-primary) !important;
+    color: var(--text-secondary) !important;
+}
+
 /* To make driver items clickable */
 .top:hover, .bottom:hover {
     background-color: var(--accent-primary-transparent);
