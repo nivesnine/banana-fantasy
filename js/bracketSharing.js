@@ -14,6 +14,7 @@ const bracketSharing = {
                 drivers: bracketGenerator.bracketData.drivers,
                 winners: bracketGenerator.bracketData.winners,
                 bracketSize: bracketGenerator.bracketData.bracketSize,
+                bracketType: bracketGenerator.bracketData.bracketType,
                 driverListText: bracketGenerator.bracketData.driverListText
             };
             
@@ -81,8 +82,16 @@ const bracketSharing = {
             // Sanitize data to prevent XSS
             const sanitizedData = this.sanitizeBracketData(bracketData);
             
+            // Ensure bracketType is set based on bracketSize for backward compatibility
+            if (!sanitizedData.bracketType) {
+                sanitizedData.bracketType = sanitizedData.bracketSize === 16 ? 'top16' : 'top32';
+            }
+            
             // Load the bracket with the shared data
             await bracketGenerator.loadSavedBracket(sanitizedData);
+            
+            // Update round selector options
+            updateRoundSelectorOptions(sanitizedData.bracketType === 'top16');
             
             // Show success message
             bracketStorage.showStatusMessage('Shared bracket loaded successfully', 'success');

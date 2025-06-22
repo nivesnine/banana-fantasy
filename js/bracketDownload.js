@@ -18,6 +18,22 @@ const bracketDownload = {
             const originalHtml = bracketContainer.innerHTML;
             const originalStyle = bracketContainer.getAttribute('style') || '';
             
+            // Remove mobile view and specific round classes
+            if (isMobile) {
+                bracketContainer.classList.remove(
+                    'mobile-view',
+                    'show-top32-round-one',
+                    'show-top32-round-two',
+                    'show-top32-round-three',
+                    'show-top32-round-four',
+                    'show-top32-championship',
+                    'show-top16-round-one',
+                    'show-top16-round-two',
+                    'show-top16-round-three',
+                    'show-top16-championship'
+                );
+            }
+            
             // Store original display states of all rounds
             const roundElements = bracketContainer.querySelectorAll('.round');
             const originalDisplayStates = Array.from(roundElements).map(el => el.style.display);

@@ -1,6 +1,65 @@
 /**
  * Main application initialization and event handling
  */
+
+/**
+ * Updates the round selector options based on the active template (Top 32 or Top 16)
+ * @param {boolean} isTop16 - Whether the active template is Top 16 (true) or Top 32 (false)
+ */
+function updateRoundSelectorOptions(isTop16) {
+    const roundSelector = document.getElementById('round-selector');
+    if (!roundSelector) return;
+    
+    // Clear existing options
+    roundSelector.innerHTML = '';
+    
+    // Add "All Rounds" option
+    const allRoundsOption = document.createElement('option');
+    allRoundsOption.value = 'all';
+    allRoundsOption.textContent = 'All Rounds';
+    roundSelector.appendChild(allRoundsOption);
+    
+    if (isTop16) {
+        // Add Top 16 options
+        const top16Options = [
+            { value: 'top16 round-one', text: 'Top 16' },
+            { value: 'top16 round-two', text: 'Quarter Finals' },
+            { value: 'top16 round-three', text: 'Semi Finals' },
+            { value: 'top16 championship', text: 'Final Battle' }
+        ];
+        
+        top16Options.forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt.value;
+            option.textContent = opt.text;
+            roundSelector.appendChild(option);
+        });
+    } else {
+        // Add Top 32 options
+        const top32Options = [
+            { value: 'top32 round-one', text: 'Top 32' },
+            { value: 'top32 round-two', text: 'Top 16' },
+            { value: 'top32 round-three', text: 'Great 8' },
+            { value: 'top32 round-four', text: 'Final 4' },
+            { value: 'top32 championship', text: 'Final Battle' }
+        ];
+        
+        top32Options.forEach(opt => {
+            const option = document.createElement('option');
+            option.value = opt.value;
+            option.textContent = opt.text;
+            roundSelector.appendChild(option);
+        });
+    }
+    
+    // Auto-select the first round option on mobile devices
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile && roundSelector.options.length > 1) {
+        roundSelector.value = roundSelector.options[1].value; // Select the first round after "All Rounds"
+        roundSelector.dispatchEvent(new Event('change'));
+    }
+}
+
 document.addEventListener('DOMContentLoaded', async function() {
     // Initialize the bracket generator
     await bracketGenerator.init();
@@ -19,26 +78,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // First remove all round-specific classes
                 bracketContainer.classList.remove(
                     'mobile-view',
-                    'show-round-one',
-                    'show-round-two',
-                    'show-round-three',
-                    'show-round-four',
-                    'show-championship'
+                    'show-top32-round-one',
+                    'show-top32-round-two',
+                    'show-top32-round-three',
+                    'show-top32-round-four',
+                    'show-top32-championship',
+                    'show-top16-round-one',
+                    'show-top16-round-two',
+                    'show-top16-round-three',
+                    'show-top16-championship'
                 );
                 
                 // If not showing all rounds, add mobile view and specific round class
                 if (selectedRound !== 'all') {
                     bracketContainer.classList.add('mobile-view');
-                    bracketContainer.classList.add(`show-${selectedRound}`);
+                    bracketContainer.classList.add(`show-${selectedRound.replace(' ', '-')}`);
                 }
             }
         });
-        
-        // Auto-select the first round on mobile devices
-        if (isMobile) {
-            roundSelector.value = 'round-one';
-            roundSelector.dispatchEvent(new Event('change'));
-        }
     }
     
     // Set up download button
@@ -48,8 +105,59 @@ document.addEventListener('DOMContentLoaded', async function() {
             const bracketContainer = document.getElementById('bracket-container');
             if (bracketContainer) {
                 // Remove mobile view classes temporarily to show the full bracket
-                bracketContainer.classList.remove('mobile-view', 'show-round-one', 'show-round-two', 
-                    'show-round-three', 'show-round-four', 'show-championship');
+                bracketContainer.classList.remove(
+                    'mobile-view', 
+                    'show-top32-round-one',
+                    'show-top32-round-two',
+                    'show-top32-round-three',
+                    'show-top32-round-four',
+                    'show-top32-championship',
+                    'show-top16-round-one',
+                    'show-top16-round-two',
+                    'show-top16-round-three',
+                    'show-top16-championship'
+                );
+                
+                // Add a temporary class for download styling
+                bracketContainer.classList.add('download-view');
+            }
+        }
+        
+        bracketDownload.downloadBracketAsImage();
+        
+        // Restore mobile view settings after download
+        if (isMobile && roundSelector) {
+            setTimeout(() => {
+                const bracketContainer = document.getElementById('bracket-container');
+                if (bracketContainer) {
+                    // Remove the download view class
+                    bracketContainer.classList.remove('download-view');
+                    
+                    // Restore the round view
+                    roundSelector.dispatchEvent(new Event('change'));
+                }
+            }, 500);
+        }
+    });
+
+    document.getElementById('download-bracket-mobile').addEventListener('click', function() {
+        // For mobile, ensure all rounds are visible before downloading
+        if (isMobile) {
+            const bracketContainer = document.getElementById('bracket-container');
+            if (bracketContainer) {
+                // Remove mobile view classes temporarily to show the full bracket
+                bracketContainer.classList.remove(
+                    'mobile-view', 
+                    'show-top32-round-one',
+                    'show-top32-round-two',
+                    'show-top32-round-three',
+                    'show-top32-round-four',
+                    'show-top32-championship',
+                    'show-top16-round-one',
+                    'show-top16-round-two',
+                    'show-top16-round-three',
+                    'show-top16-championship'
+                );
                 
                 // Add a temporary class for download styling
                 bracketContainer.classList.add('download-view');
@@ -126,6 +234,49 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
     });
     
+    // Try to load from shared URL first
+    const sharedBracketLoaded = await bracketSharing.loadFromSharedURL();
+    
+    // If no shared bracket, check for saved data and load if available
+    if (!sharedBracketLoaded && bracketStorage.hasSavedBracket()) {
+        const savedData = bracketStorage.loadBracket();
+        await bracketGenerator.loadSavedBracket(savedData);
+        
+        const lastUpdated = bracketStorage.getLastUpdated();
+        if (lastUpdated) {
+            const dateStr = new Date(lastUpdated).toLocaleString();
+            bracketStorage.showStatusMessage(`Loaded saved bracket from ${dateStr}`, 'info');
+        }
+        
+        // Update round selector options based on the loaded bracket template
+        if (savedData && savedData.bracketType) {
+            updateRoundSelectorOptions(savedData.bracketType === 'top16');
+        } else {
+            // Default to top32 if no bracket type is specified
+            updateRoundSelectorOptions(false);
+        }
+    } else if (!sharedBracketLoaded) {
+        // No saved bracket, initialize with default Top 32 options
+        updateRoundSelectorOptions(false);
+    }
+    
+    // Check window resize for mobile/desktop switching
+    window.addEventListener('resize', function() {
+        const isMobileNow = window.innerWidth <= 768;
+        const bracketContainer = document.getElementById('bracket-container');
+        
+        if (isMobileNow !== isMobile && bracketContainer && roundSelector) {
+            if (isMobileNow) {
+                // Switching to mobile
+                roundSelector.value = 'round-one';
+                roundSelector.dispatchEvent(new Event('change'));
+            } else {
+                // Switching to desktop
+                bracketContainer.classList.remove('mobile-view');
+            }
+        }
+    });
+    
     // Set up driver entry form
     document.getElementById('driver-entry-form').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -151,37 +302,46 @@ document.addEventListener('DOMContentLoaded', async function() {
         
         // Hide the share URL section when new drivers are loaded
         document.querySelector('.share-url-section').style.display = 'none';
-    });
-    
-    // Try to load from shared URL first
-    const sharedBracketLoaded = await bracketSharing.loadFromSharedURL();
-    
-    // If no shared bracket, check for saved data and load if available
-    if (!sharedBracketLoaded && bracketStorage.hasSavedBracket()) {
-        const savedData = bracketStorage.loadBracket();
-        await bracketGenerator.loadSavedBracket(savedData);
         
-        const lastUpdated = bracketStorage.getLastUpdated();
-        if (lastUpdated) {
-            const dateStr = new Date(lastUpdated).toLocaleString();
-            bracketStorage.showStatusMessage(`Loaded saved bracket from ${dateStr}`, 'info');
+        // Update round selector options based on the number of drivers
+        // Top 16 bracket is used when there are fewer than 32 drivers
+        updateRoundSelectorOptions(drivers.length <= 16);
+    });
+
+    // Initialize line numbers for textarea
+    const driverTextarea = document.getElementById('driver-list');
+    const lineNumbers = document.getElementById('driver-list-line-numbers');
+
+    if (driverTextarea && lineNumbers) {
+        // Initial line numbers update
+        updateLineNumbers(driverTextarea, lineNumbers);
+
+        // Update line numbers on input or when text changes
+        driverTextarea.addEventListener('input', function() {
+            updateLineNumbers(driverTextarea, lineNumbers);
+        });
+        
+        driverTextarea.addEventListener('keydown', function() {
+            // Small delay to ensure text has been updated
+            setTimeout(() => updateLineNumbers(driverTextarea, lineNumbers), 0);
+        });
+
+        // Sync scroll position more precisely
+        driverTextarea.addEventListener('scroll', function() {
+            lineNumbers.scrollTop = driverTextarea.scrollTop;
+        });
+    }
+
+    function updateLineNumbers(textarea, lineNumbersDiv) {
+        const lines = textarea.value.split('\n');
+        const lineCount = lines.length || 1; // Ensure at least one line
+        lineNumbersDiv.innerHTML = '';
+        
+        // Create one number per line
+        for (let i = 0; i < lineCount; i++) {
+            const span = document.createElement('span');
+            span.textContent = (i + 1).toString();
+            lineNumbersDiv.appendChild(span);
         }
     }
-    
-    // Check window resize for mobile/desktop switching
-    window.addEventListener('resize', function() {
-        const isMobileNow = window.innerWidth <= 768;
-        const bracketContainer = document.getElementById('bracket-container');
-        
-        if (isMobileNow !== isMobile && bracketContainer && roundSelector) {
-            if (isMobileNow) {
-                // Switching to mobile
-                roundSelector.value = 'round-one';
-                roundSelector.dispatchEvent(new Event('change'));
-            } else {
-                // Switching to desktop
-                bracketContainer.classList.remove('mobile-view');
-            }
-        }
-    });
 }); 

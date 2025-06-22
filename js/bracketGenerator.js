@@ -9,6 +9,7 @@ const bracketGenerator = {
         drivers: [],
         winners: {},
         bracketSize: 32,
+        bracketType: 'top32', // Default to top32
         driverListText: '' // Store the original driver list text
     },
     
@@ -189,10 +190,12 @@ const bracketGenerator = {
         
         // Determine bracket size
         const bracketSize = this.determineBracketSize(drivers);
+        const bracketType = bracketSize === 16 ? 'top16' : 'top32';
         
         // Update bracket data
         this.bracketData.competitionName = competitionName;
         this.bracketData.bracketSize = bracketSize;
+        this.bracketData.bracketType = bracketType;
         this.bracketData.drivers = this.assignDriverPositions(drivers, bracketSize);
         this.bracketData.winners = {};
         this.bracketData.driverListText = driverListText; // Save the original text
@@ -247,6 +250,12 @@ const bracketGenerator = {
         const driverElements = document.querySelectorAll('.top, .bottom');
         driverElements.forEach(element => {
             this.makeElementSelectable(element);
+            
+            // Add title attribute with full name for hover tooltip
+            const fullName = this.cleanDriverName(element.textContent.trim());
+            if (fullName && fullName !== 'BYE') {
+                element.setAttribute('title', fullName);
+            }
         });
     },
     
@@ -347,6 +356,7 @@ const bracketGenerator = {
                     if (topElement) {
                         topElement.textContent = cleanNewWinnerName;
                         this.makeElementSelectable(topElement);
+                        topElement.setAttribute('title', cleanNewWinnerName); // Add title for tooltip
                         
                         // If this is a restoration, mark as selected if needed
                         if (markSelected) {
@@ -359,6 +369,7 @@ const bracketGenerator = {
                     if (bottomElement) {
                         bottomElement.textContent = cleanNewWinnerName;
                         this.makeElementSelectable(bottomElement);
+                        bottomElement.setAttribute('title', cleanNewWinnerName); // Add title for tooltip
                         
                         // If this is a restoration, mark as selected if needed
                         if (markSelected) {
@@ -415,6 +426,9 @@ const bracketGenerator = {
                     
                     // Make the advanced winner selectable
                     this.makeElementSelectable(targetElement);
+                    
+                    // Add title attribute for tooltip
+                    targetElement.setAttribute('title', cleanNewWinnerName);
                     
                     console.log(`Advanced ${cleanNewWinnerName} to ${isRightSide ? 'right' : 'left'} side, round ${nextRoundNumber}, match ${nextMatchNumber}, position ${targetPosition}`);
                 }
@@ -581,6 +595,11 @@ const bracketGenerator = {
         
         // Set the bracket data
         this.bracketData = savedData;
+        
+        // Ensure bracketType is set based on bracketSize for backward compatibility
+        if (!this.bracketData.bracketType) {
+            this.bracketData.bracketType = this.bracketData.bracketSize === 16 ? 'top16' : 'top32';
+        }
         
         // Ensure templates are loaded
         if (!this.template32 || !this.template16) {

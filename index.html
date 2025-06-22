@@ -35,7 +35,10 @@
                 <p>Enter one driver per line. Drivers will be placed in the bracket in the exact order they're entered (positions 1, 2, 3, etc.)<br>
                 Use "BYE" as a driver name for empty slots. BYEs will automatically advance their opponent.</p>
                 <form id="driver-entry-form">
-                    <textarea id="driver-list" placeholder="Enter driver data here..."></textarea>
+                    <div class="textarea-container">
+                        <div class="line-numbers" id="driver-list-line-numbers"></div>
+                        <textarea id="driver-list" placeholder="Enter driver data here..."></textarea>
+                    </div>
                     <div class="button-group">
                         <button type="submit" class="btn">Load Drivers</button>
                     </div>
@@ -50,20 +53,20 @@
                     <button id="copy-share-url" class="btn secondary">Copy</button>
                 </div>
             </div>
-            <!-- Mobile round selector moved below the competition name -->
-            <div class="mobile-controls">
+            <div id="bracket-container"></div>
+        </div>
+
+        <!-- Mobile round selector moved below the competition name -->
+        <div class="mobile-controls">
+            <div class="mobile-controls-left">
                 <label for="round-selector">View Round:</label>
                 <select id="round-selector" class="round-selector">
-                    <option value="all">All Rounds</option>
-                    <option value="round-one">Top 32/16</option>
-                    <option value="round-two">Top 16/Quarter Finals</option>
-                    <option value="round-three">Great 8/Semi Finals</option>
-                    <option value="round-four">Final 4</option>
-                    <option value="championship">Final Battle</option>
+                    <!-- Options will be populated dynamically based on bracket type -->
                 </select>
             </div>
-
-            <div id="bracket-container"></div>
+            <div class="mobile-controls-right">
+                <button id="download-bracket-mobile" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></button>
+            </div>
         </div>
     </main>
     

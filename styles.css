@@ -151,16 +151,108 @@ footer {
     color: #ccc;
 }
 
-#driver-list {
+/* Textarea with line numbers - IDE style */
+.textarea-container {
+    position: relative;
+    display: flex;
     width: 100%;
-    height: 150px;
-    padding: 10px;
-    border: 1px solid #444;
-    border-radius: 4px;
-    background-color: #222;
-    color: #fff;
     margin-bottom: 10px;
+    background-color: #222;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
+}
+
+.line-numbers {
+    min-width: 40px;
+    padding: 10px 0;
+    background-color: #1a1a1a;
+    border-right: 1px solid #333;
+    color: #666;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    user-select: none;
+    text-align: right;
+    overflow-y: hidden;
+    z-index: 1;
+}
+
+.line-numbers span {
+    display: block;
+    padding-right: 8px;
+    height: 21px;
+    line-height: 21px;
+    font-size: 12px;
+    color: #777;
+}
+
+#driver-list {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    background-color: #222;
+    color: #e6e6e6;
     resize: vertical;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 14px;
+    line-height: 21px;
+    tab-size: 4;
+    overflow-y: auto;
+}
+
+#driver-list:focus {
+    outline: none;
+}
+
+/* Remove scrollbar from line numbers */
+.line-numbers {
+    overflow-y: hidden;
+}
+
+#driver-list {
+    overflow-y: auto;
+}
+
+/* Customize scrollbar */
+#driver-list::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+#driver-list::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+#driver-list::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+}
+
+#driver-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Hide scrollbar in Firefox */
+#driver-list {
+    scrollbar-width: thin;
+    scrollbar-color: #444 #222;
+}
+
+/* Ensure textarea and line numbers have the same line height and padding top */
+#driver-list, .line-numbers {
+    padding-top: 10px;
+    line-height: 21px;
+}
+
+/* Start textarea and line numbers at the same position */
+#driver-list, .line-numbers {
+    margin-top: 0;
+}
+
+/* Remove default margin/padding that could cause misalignment */
+.line-numbers, #driver-list {
+    margin: 0;
+    box-sizing: border-box;
 }
 
 #bracket-container {
@@ -211,7 +303,7 @@ section {
 
 /* Round detail headers */
 .round-details {
-    color: #4790c5;
+    color: #fafafa;
     font-weight: bold;
     text-align: center;
     font-size: 14px;
@@ -250,12 +342,19 @@ section::before {
 }
 
 .round {
-    flex: 1;
+    flex: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     padding: 0 10px;
     position: relative;
+}
+
+.round.left {
+    align-items: flex-start;
+}
+
+.round.right {
+    align-items: flex-end;
 }
 
 .round-one {
@@ -276,17 +375,16 @@ section::before {
 
 /* Driver boxes styling */
 .top, .bottom {
-    width: 180px;
+    width: 310px;
+    overflow: hidden;
     height: 30px;
     background-color: #000;
     color: #fff;
     display: flex;
     align-items: center;
-    cursor: pointer;
     margin-bottom: 1px;
-    position: relative;
     transition: background-color 0.2s;
-    overflow: hidden;
+    white-space: nowrap;
 }
 
 /* Adjust the driver name in the left bracket */
@@ -337,12 +435,13 @@ section::before {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 25px;
+    padding: 25px;
+    background-color: #333;
+    border-radius: 5%;
 }
 
 .championship {
     width: 100%;
-    background-color: #990000;
     padding: 15px 10px;
     text-align: center;
 }
@@ -351,8 +450,14 @@ section::before {
 .championship .bottom {
     background-color: transparent;
     justify-content: center;
+    text-align: center;
     padding: 5px 0;
     font-weight: bold;
+    width: 220px;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .vs-champion {
@@ -370,54 +475,6 @@ section::before {
 /* To make driver items clickable */
 .top:hover, .bottom:hover {
     background-color: rgba(211, 47, 47, 0.7);
-}
-
-/* Connector lines for the bracket */
-/* For left bracket connectors */
-.split-one .matchup::after {
-    content: '';
-    position: absolute;
-    right: -20px;
-    top: 15px;
-    width: 20px;
-    height: 1px;
-    background-color: #444;
-}
-
-.split-one .matchup:nth-child(odd)::before {
-    content: '';
-    position: absolute;
-    right: -20px;
-    top: 15px;
-    height: calc(100% + 30px);
-    width: 1px;
-    background-color: #444;
-}
-
-/* For right bracket connectors */
-.split-two .matchup::after {
-    content: '';
-    position: absolute;
-    left: -20px;
-    top: 15px;
-    width: 20px;
-    height: 1px;
-    background-color: #444;
-}
-
-.split-two .matchup:nth-child(odd)::before {
-    content: '';
-    position: absolute;
-    left: -20px;
-    top: 15px;
-    height: calc(100% + 30px);
-    width: 1px;
-    background-color: #444;
-}
-
-/* Final 4 to championship connectors */
-.round-four .matchup::after {
-    width: 25px;
 }
 
 /* Status messages */
@@ -459,11 +516,15 @@ section::before {
     display: none;
 }
 
-.mobile-view.show-round-one .round-one,
-.mobile-view.show-round-two .round-two,
-.mobile-view.show-round-three .round-three,
-.mobile-view.show-round-four .round-four,
-.mobile-view.show-championship .champion {
+.mobile-view.show-top32-round-one .round-one,
+.mobile-view.show-top32-round-two .round-two,
+.mobile-view.show-top32-round-three .round-three,
+.mobile-view.show-top32-round-four .round-four,
+.mobile-view.show-top32-championship .champion,
+.mobile-view.show-top16-round-one .round-one,
+.mobile-view.show-top16-round-two .round-two,
+.mobile-view.show-top16-round-three .round-three,
+.mobile-view.show-top16-championship .champion {
     display: flex;
 }
 
@@ -479,14 +540,10 @@ section::before {
 
 /* Mobile Round Selector */
 .mobile-controls {
-    margin: 15px auto;
     padding: 10px 15px;
-    max-width: 300px;
     background-color: #333;
-    border-radius: 4px;
     display: none; /* Hidden by default, shown on mobile */
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 100; /* Ensure it's above other elements */
 }
 
@@ -521,17 +578,22 @@ section::before {
     }
     
     .mobile-controls {
-        display: block; /* Show on mobile */
+        display: flex; /* Show on mobile */
+        align-items: end;
     }
-    
+    .mobile-controls-left {
+        width: calc(100% * 0.75);
+    }
+    .mobile-controls-right {
+        width: calc(100% * 0.25);
+    }
+
     .bracket-container {
         min-width: 100%;
     }
     
     /* Enhanced mobile driver boxes - BIGGER */
     .top, .bottom {
-        width: 100%; /* Full width for mobile */
-        max-width: 300px; /* Increased from 250px */
         font-size: 16px; /* Increased from 14px */
         padding-left: 5px; /* Added some padding */
         padding-right: 5px;
@@ -572,6 +634,7 @@ section::before {
     .mobile-view .split {
         justify-content: center;
         width: 100%;
+        display: block;
     }
     
     /* Ensure round titles are visible */
@@ -613,7 +676,8 @@ section::before {
     }
     
     /* Final battle needs more space */
-    .mobile-view.show-championship .champion {
+    .mobile-view.show-top32-championship .champion,
+    .mobile-view.show-top16-championship .champion {
         padding: 30px 10px; /* Increased from 20px */
     }
     
@@ -628,11 +692,6 @@ section::before {
         background-color: #d32f2f !important;
         color: white !important;
         font-weight: bold;
-    }
-    
-    /* Improve form controls for mobile */
-    #driver-list {
-        height: 120px;
     }
     
     .button-group {
@@ -684,7 +743,6 @@ section::before {
 /* Small phones */
 @media (max-width: 480px) {
     .top, .bottom {
-        max-width: 280px; /* Increased from 200px */
         font-size: 14px; /* Increased from 12px */
         height: 32px; /* Increased from 24px */
     }
@@ -710,7 +768,6 @@ section::before {
 /* Extra small phones */
 @media (max-width: 360px) {
     .top, .bottom {
-        max-width: 240px; /* Increased from 180px */
         font-size: 13px; /* Increased from 11px */
         height: 30px;
     }
@@ -784,18 +841,6 @@ section::before {
         margin-bottom: 0;
     }
     
-    /* Show the mobile controls by default on mobile */
-    .mobile-controls {
-        display: block; /* Show on mobile */
-    }
-    
-    /* Sticky position for the mobile controls */
-    .mobile-controls {
-        position: sticky;
-        bottom: 0;
-        z-index: 100;
-    }
-    
     /* Improve the mobile bracket view */
     .mobile-view .round-details {
         color: #d32f2f;
@@ -814,7 +859,7 @@ section::before {
 
 /* Download view - special styling for when downloading the bracket */
 .download-view {
-    min-width: 1200px !important;
+    min-width: 1400px !important;
     width: 100% !important;
     max-width: none !important;
     overflow: visible !important;
