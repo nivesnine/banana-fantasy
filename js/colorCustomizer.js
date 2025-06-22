@@ -192,10 +192,6 @@ class ColorCustomizer {
             accentPreview.style.borderColor = accentColor;
             accentPreview.style.color = textColor;
         }
-        
-        if (textPreview) {
-            textPreview.style.color = textColor;
-        }
     }
     
     /**
